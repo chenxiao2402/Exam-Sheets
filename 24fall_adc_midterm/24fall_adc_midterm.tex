@@ -1,0 +1,816 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% writeLaTeX Example: A quick guide to LaTeX
+%
+% Source: Dave Richeson (divisbyzero.com), Dickinson College
+% 
+% A one-size-fits-all LaTeX cheat sheet. Kept to two pages, so it 
+% can be printed (double-sided) on one piece of paper
+% 
+% Feel free to distribute this example, but please keep the referral
+% to divisbyzero.com
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+% If you're new to LaTeX, the wikibook is a great place to start:
+% http://en.wikibooks.org/wiki/LaTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{enumitem}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+\usepackage{color}
+\usepackage{listings}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{language=SQL,
+  basicstyle={\small\ttfamily},
+  belowskip=3mm,
+  breakatwhitespace=true,
+  breaklines=true,
+  classoffset=0,
+  columns=flexible,
+  commentstyle=\color{dkgreen},
+  framexleftmargin=0.1em,
+  frameshape={}{}{}{}, %To remove to vertical lines on left, set `frameshape={}{}{}{}`
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{gray},
+  showstringspaces=false,
+  stringstyle=\color{mauve},
+  tabsize=1,
+  xleftmargin =1em
+}
+
+\usepackage{relsize}
+\newcommand*{\defeq}{\stackrel{\mathsmaller{\mathsf{def}}}{=}}
+
+\newcommand{\term}[1]{{\color{blue} \textbf{#1}}}
+\newcommand{\prpt}[1]{{\color{red} \textbf{#1}}}
+\newcommand{\sql}[1]{{\color{cyan} \textbf{#1}}}
+\newcommand{\ans}[1]{{\color{purple} \textbf{#1}}}
+\newcommand{\exmp}[1]{{\texttt{#1}}}
+\newcommand{\trc}[1]{{\color{violet} $\mathtt{#1}$ }}
+\newcommand{\trcs}[1]{{\color{green} $$
+\begin{array}{l}
+	#1
+\end{array}
+$$ }}
+
+\newcommand{\semijoin}{\ensuremath{\ltimes}}
+
+
+
+% \usepackage[T1]{fontenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+% \usepackage{helvet}
+
+\usepackage{scrextend}
+\changefontsizes[7.5pt]{6pt}
+
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.3in,left=.3in,right=.3in,bottom=.3in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt plus 0ex}
+% -----------------------------------------------------------------------
+
+
+\newtheorem{theorem}{Theorem}
+
+\title{Quick Guide to LaTeX}
+
+\begin{document}
+
+% \raggedright
+\footnotesize
+
+% \begin{center}
+%      \Large{\textbf{A quick guide to \LaTeX}} \\
+% \end{center}
+\begin{multicols}{4}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+
+
+\section{Week 1. Relational}
+
+\subsection{Definitions}
+
+A relational database is a collection of relations (tables).
+
+\begin{itemize}
+	\item \term{Attributes}: relation column names.
+	\item \term{Relation Schema}: consists of a relation name and a set of attributes. The \term{meta-data} of a relation.
+	\item \term{Tuples}: rows of a relation.
+	\item \term{Tuple Components}: a tuple has one component for each attribute of the relation; a tuple component value must be from the domain of the attribute.
+	\item \term{Relation instance}: a finite set of tuples. The \term{data} of a relation.
+	\item \term{Relation}: a pair of a relation schema and a relation instance.
+\end{itemize}
+
+Consider the schema \exmp{Student(Sid, Sname, Major, Byear)}.
+
+Relation name \exmp{Student} and attributes (the headers of table) \exmp{(Sid, Sname, Major, Byear)} will compose the \term{relation schema}. The body of the table is the \term{relation instance}, which is composed of a set of \term{tuples}.
+
+In one \term{tuple} \exmp{t = (s1, John, CS, 1990)}, we have \exmp{t.Sid}, \exmp{t.Sname}, \exmp{t.Major} and \exmp{t.Byear} as the \term{tuple components} of \exmp{t}. The \term{domain values} of these tuple components are \exmp{s1}, \exmp{John}, \exmp{CS} and \exmp{1990} respectively.
+
+\subsection{Attribute Domains}
+
+Different types are possible. \term{(1) Basic Types}: boolean, integer, real, character, text. \term{(2) Composite Types}: monetary, date.\term{(3) Enumeration Types}: list of values, sets, arrays. \term{(4) Semi-structured Types}: XML, JSON. \term{(5)Arrays}. and \term{(6)} Others
+
+
+\subsection{Other Definitions}
+
+\term{NULL} represents a missing or unknown value of a tuple. Two NULL values may not be equal.
+
+A \term{key} is a subset of attributes of the schema of a relation that can uniquely distinguish tuples. A key of a relation is a \exmp{constraint} of that relation. An insertion will be rejected if the primary key constraint is violated.
+
+In the relation schemas (\exmp{Student, Course, Enroll}), the attribute \exmp{Sid} of \exmp{Enroll} is a \term{foreign key} referencing the primary key \exmp{Sid} of \exmp{Student}. \term{Foreign keys} impose an order on insertions: the tuple \exmp{(s1, c1, 'B')} can only be inserted into \exmp{Enroll} \textbf{AFTER} a tuple identified by the \exmp{Sid} value \exmp{s1} exists in \exmp{Student} \textbf{AND AFTER} a tuple identified by the \exmp{Cno} value \exmp{c1} exists in \exmp{Course}. Otherwise, rejection.
+
+Foreign keys necessitate \term{cascading deletions}: deleting tuple \exmp{(s1, 'John', 'CS', 1990)} from \exmp{Student} requires deleting all tuples in \exmp{Enroll} referencing the \exmp{Sid} value \exmp{s1}. Two options in SQL: (1) allow cascading deletions. (2) disallow cascading deletions (and hence reject deletion).
+
+\section{Week 1. SQL Part 1}
+
+\subsection{SQL Form}
+
+The simplest form of a SQL query is defined as follows.
+
+\begin{lstlisting}
+	SELECT S.sid, S.Sname --list of components of tuple variables
+	FROM Student S --list of tuple variables associated with realtions
+	WHERE S.Major='CS'; -- condition on components of tuple variables.
+\end{lstlisting}
+
+\exmp{S} is a \term{tuple variable} that ranges over all tuples in the \exmp{Student} relation. Specifically, the tuple variable is assigned, one-at-a-time, to each tuple in that relation. In addition, since the \exmp{Student} relation is a set, the order in which \exmp{S} is assigned to these tuples is \textbf{NOT} pre-determined.
+
+If we only query \exmp{S.Major} instead of \exmp{(S.Sid, S.Sname)}, the result of this query can be a \term{bag} (\term{multiset}). We can use \term{DISTINCT} to coerce the result of the query into a \term{set}.
+
+\subsection{Time Complexity}
+
+If \exmp{Student} has $m$ tuples and \exmp{Enroll} has $n$ tuples, a naive query will run \exmp{IF S.Sid = E.Sid AND E.Grade='B'} $m \times n$ times. On the other hand, using the subquery to yield $s$ tuples first reduces the total time to $n + m \times s$.
+
+\begin{lstlisting}
+	SELECT S.sid, C.Cno
+	FROM Student S, (SELECT E.Sid, E.Cno FROM Enroll E WHERE E.Grade='B') C
+	WHERE S.Sid = C.Sid;
+\end{lstlisting}
+
+\subsection{Set Operations}
+
+The result of set operations \term{UNION}, \term{INTERSECT} and \term{EXCEPT} are all sets, even if the inputs are bags. To retain bag semantics, use \term{UNION ALL}, \term{INTERSECT ALL} and \term{EXCEPT ALL} instead.
+
+\section{Week 2. SQL Part 2}
+
+\subsection{Predicates}
+
+We have \term{IN}, \term{NOT IN}, \term{= SOME}, \term{<= ALL}, \term{EXISTS}, \term{NOT EXISTS}.
+
+\section{Week 2. Tuple Relational Calculus (TRC)}
+
+\subsection{TRC Introduction}
+
+\term{TRC} is a non-procedural query language to retrieve data from relational tables. \term{TRC query (simplest form)} is denoted as $\{t \mid P(t)\}$, where \exmp{P(t)} denotes a formula in which tuple variable \exmp{t} appears. \term{Answers} are a set of all tuples \exmp{T} for which the formula \exmp{P(t)} evaluates to true. 
+
+\term{Formula} is recursively defined as (a) a collection of \term{atom formulas} connected via logical connectives, and (b) is described by a language based on \term{first-order logic} (variables, predicates, quantifiers).
+
+\term{Atomic formulas} inclue $s \in \textit{Student}$, $s.\textit{sid} \textit{<>} \textit{'Eric'}$. \term{Formulas} include an atomic formula $p$; or $(\neg p)$; $p \lor q$; $p \land q$; $p \rightarrow q$; $\exists t, P(t)$;  $\forall t, P(t)$.
+
+\subsection{TRC Free variables}
+
+The use of existential or universal quantifiers for variable $t$ in a formula is to \term{bound} $t$ in the formula. A tuple variable that is not bound is \term{free}. A formula $P$ is a \term{constraint} if it has no free variables; such a constraint is a statement that is either true or false. \exmp{Primary keys} and \exmp{foreign keys} are examples of constraints. 
+
+There are two examples of constraints; both of them implies "There is a student whose name is Eric". Especially, the second is a TRC constraint that uses \exmp{<>$\emptyset$} set predicate ($\exists$ is implicitly used).
+
+\begin{itemize}
+	\item \trc{\exists s (Student(s) \land s.sname = Eric)}.
+	\item \trc{\{1\mid Student(s) \land s.sname = Eric\}\;\text{<>}\;\emptyset}
+\end{itemize}
+
+\subsection{TRC Examples}
+
+There is a student who only bought books with bookno <> 1000 (two solutions).
+
+\trc{\exists s ( Student(s) \land \forall t ( (Buys(t) \land t.sid = s.sid) \rightarrow t.bookno <> 1000 ) )}
+\trc{\exists s ( Student(s) \land \neg \exists t ( Buys(t) \land t.sid = s.sid \land  t.bookno <> 1000 ) )}
+
+The corresponding SQL.
+
+\begin{lstlisting}
+SELECT EXISTS (
+    SELECT 1 FROM Student S WHERE 
+        NOT EXISTS (
+            SELECT 1 FROM Buys T 
+            WHERE T.sid = S.sid AND T.bookno = 1000))
+\end{lstlisting}
+
+\subsection{TRC Constraints}
+
+The variables that appears to the left of $\mid$ must be the only free variables in the formula $P(\cdot)$. All other tuple variables must be bound using a quantifier. In SQL, the free variables are exclusively those that are introduced in the \textbf{outmost} FROM clause of the query.
+
+\section{Week 3. Relational Algebra}
+
+\subsection{RA Operations}
+
+\begin{itemize}
+\item \term{Select} (the filter): $\sigma_{\text{dept\_name='Physics'} \;\land\; \text{salary} >  90000}(\text{instructor})$. Selection is \prpt{commutative} ($\sigma_{c_1} (\sigma_{c_2}(R)) = \sigma_{c_2} (\sigma_{c_1} (R))$) and \prpt{cascading} ($\sigma_{c_1 \land c_2} (R) = \sigma_{c_2 \land c_1} (R)$). 
+	\item \term{Project} (a subset of attributes): $\pi_{\text{ID, name, salary}}(\text{instructor})$. Not projection returns a set.
+	\item \term{Cartesian-Product} (cross join): $\sigma_{\text{instructor.id=teaches.id}}(\text{instructor}\times\text{teaches})$. After cartesian-product, we may need to do the selection.
+	\item \term{Join} (join with condition): $r \bowtie_{\theta} s = \sigma_{\theta} (r \times s)$. \prpt{Commutative} ($r \bowtie s = s \bowtie r$) and \prpt{cascading} ($r \bowtie (s \bowtie t) = (r \bowtie s) \bowtie t$).
+	\item \term{Union} $\cup$; \term{Set Difference} $-$; \term{Set-Intersection} $\cap$. 
+	\item \term{Rename}: $\rho_x(E)$ or $\rho_{x(A_1, A_2, \cdots A_n)}(E)$ will return the result of expression $E$ under the name $x$.
+	\item \term{Assignment}: $\text{Physics} \leftarrow \sigma_{\text{dept\_name="Music"}} (\text{instructor})$.
+\end{itemize}
+
+\section{Week 4. Joins And Semi-Joins}
+
+Operations in query languages that can aid in discovering relationships between objects in the database are called \term{joins}. Operations in query languages that can aid in discovering objects in the database that satisfy certain properties are called \term{semi-joins}.
+
+\subsection{Two types of Joins}
+
+The first one is \term{Regular Joins}, joins that compute relationships between between objects $(o_1, o_2)$ based on \textbf{tuple-component comparisons}, like $"t_1.A \theta t_2.B"$. It contains \term{JOIN} (or called \term{INNER JOIN}); \term{NATURAL JOIN} (a special case of \term{JOIN}); \term{CROSS JOIN} (cartesian product, a special case of \term{NATURAL JOIN}).
+
+\begin{itemize}
+	\item \term{JOIN}: $E_1 \bowtie_C E_2$ is called the join between $E_1$ and $E_2$ on condition $C$.
+	\item \term{CROSS JOIN}: $E_1 \bowtie_{\text{true}} E_2 = E_1 \times E_2$.
+	\item \term{NATURAL JOIN}: $\text{Enroll} \bowtie \text{TaughtBy} = \pi_{E.\text{sid}, E.\text{cno}, E.\text{grade}, E.\text{tid}} (\text{E} \bowtie_{E.\text{cno} = T.\text{cno}} \text{T})$. A \term{natural join} between two relations is a series of "equality" joins on the common attributes of the relations, followed by a projection to remove redundant columns.
+\end{itemize}
+
+\term{Multiple natural joins} are possible. If we have \exmp{Enroll({\color{red}sid}, {\color{cyan}cno}, grade)}, \exmp{Student({\color{red}sid}, sname, age)} and \exmp{Course({\color{cyan}cno}, cname, dept)}, the join condition will be $\mathtt{E.sid = S.sid \land E.cno = C.cno}$.
+
+The second one is \term{Set joins}, joins that compute relations between objects based on comparisons between sets of tuples associated with these objects (e.g., a comparison between the set of courses taken by students and the set of courses taught by a teacher). SQL has limited support for set joins. We can simulate them using predicates \sql{[NOT] EXISTS} and \sql{[NOT] IN}.
+
+\subsection{Two types of Semi-Joins}
+
+The first one is \term{Regular Semi-Joins}. SQL doesn't have special operations for semijoins, but they can be simulated by \term{NATURAL JOIN} operations, or with the \sql{IN} set predicate.
+
+The second one is \term{Set Semi-Joins}. SQL doesn't have set semijoins. They can be shown to be special cases of set joins and as such can be simulated.
+
+\subsection{SQL and RA}
+
+SQL is a \term{declarative} language. However, with the addition of \term{JOIN}, \term{NATURAL JOIN} and \term{CROSS JOIN}, SQL can be viewed as an algebra that can faithfully simulate RA.
+
+\subsection{Semi-Join}
+
+A \term{Semi-Join} will only retain attributes from the first relation (i.e. Student). Please note the rhs of the following formula is natural join. Semi-join can be simulated by \sql{NATURAL JOIN} or \sql{IN}.
+
+\begin{align*}
+\text{Student}\semijoin\text{Enroll} & = \pi_{\text{S.sid, S.sname, S.age}} (\text{Student} \bowtie_{} \text{Enroll}) \\
+ &= \text{Student} \bowtie \pi_{E.\text{sid}} (\text{Enroll})	
+\end{align*}
+
+
+Semi-Join is \prpt{not associative}. In general $E_1 \semijoin E_2$ can be implemented using hash in linear time. In contrast, $E_1 \bowtie E_2$ runs in $O(|E_1| |E_2|)$ time.
+
+We can use \term{anti-semijoin} to find students who have not enrolled in any course, which can be simulated with \prpt{IN}. The time complexity is linear with hashing.
+
+$$\text{Student} \;\bar{\semijoin}\; \text{Enroll} = \text{Student} - \text{Student} \semijoin \text{Enroll}$$
+
+Let $E_1$ and $E_2$ be expressions from the same schema, we have
+
+$$
+\begin{array}{l}
+E_1 \semijoin E_2 = E_1 \bowtie E_2 = E_1 \cap E_2
+\\
+\\
+E_1 \bar{\semijoin} E_2 = E_1 - (E_1 \cap E_2) = E_1 - E_2
+\end{array}
+$$
+
+\section{Week 4. Views}
+
+A \term{view} is a virtual relation defined by a query. It works like a \prpt{Macro}.
+
+\begin{lstlisting}
+CREATE VIEW CS_Course AS
+    SELECT C.Cno, C.Cname FROM Course C WHERE C.Dept = 'CS'
+
+CREATE VIEW Student_enrolled_in_CS_course AS 
+    SELECT S.Sid, S.Sname, S.Major, S.Byear FROM StudentS
+    WHERE S.Sid IN (
+        SELECT E.Sid FROM Enroll E
+        WHERE E.Cno IN (
+            SELECT C.Cno FROM CS_Course C));
+\end{lstlisting}
+
+Views can be used to \prpt{modularize} a complex query into simpler units. The previous examples illustrate this. Views provide \prpt{independence} from changes in the underlying database due to \prpt{growth and restructuring} of the base relation schemas. This is called \term{logical data independence}.
+
+\subsection{Properties of Views}
+
+Both \prpt{growth} and \prpt{reconstruction} shall not affect views. (A) We can expand the base table by adding new attributes and constraints. No need to redefine views because of these alterations. (B) If we divide the \exmp{Student} table into \exmp{Student\_Info} and \exmp{Student\_Major}, we can create a view called \exmp{Student}.
+
+\sql{DROP TABLE table\_name} will only succeed if there are no views with \sql{table\_name} as base relation. \sql{DROP TABLE table\_name CASCADE} will succeed and drop all the views that were defined in terms of \sql{table\_name}. The same applies to \sql{DROP VIEW view\_name}.
+
+\term{View expansion} refers to the process of rewriting queries by expanding the views by their definitions in these queries, which precedes query evaluation.
+
+\subsection{Materialized View}
+
+In many cases, especially if the database state is not changing, it is useful to precompute the view and then store it in the database for future use. A view that is precomputed is called a \term{materialized view}.
+
+The major challenge with materialized views is that they need to be updated when updates to the base relations (i.e., the state of the basis) occur. However, when views are defined by queries that involve negation with expressions involving \sql{EXCEPT}, \sql{ALL}, \sql{NOT IN}, and \sql{NOT EXISTS}, incremental view maintenance may not be possible. In such cases, the entire process to materialize the views need to be redone.
+
+\begin{lstlisting}
+REFRESH MATERIALIZED VIEW CS_Course AS -- CREATE/REFRESH: initialize / recalculate
+    SELECT C.cno FROM Course C WHERE C.dept = ‘CS’;
+\end{lstlisting}
+
+The \sql{WITH} statement of SQL permits us to define \term{temporary views} which are only local to the query we wish to solve. These temporary views are not made persistent outside the query.
+
+\subsection{Recursive Views}
+
+A recursive definition of Path is as follows: (A) Base rule: If Graph(s,t) then Path(s,t); (B) Inductive rule: If Graph(s,u) and Path(u,t) then Path(s,t).
+
+\begin{lstlisting}
+WITH RECURSIVE Path(source, target) AS (
+    SELECT E.source, E.target FROM Graph E
+    UNION
+    SELECT E.source, P.target 
+        FROM Graph E, Path P 
+        WHERE E.target = P.source
+)
+SELECT * FROM Path;
+\end{lstlisting}
+
+\subsection{Parameterized Views}
+
+In standard SQL, subqueries such as on the previous slide cannot be used to define parameterized views. PostgreSQL, however, permits the use of user-defined functions that return tables. Using this feature, we can specify \term{parameterized views}.
+
+\begin{lstlisting}
+CREATE FUNCTION coursesOfferedByDept(deptname TEXT) RETURNS TABLE(Cno TEXT) AS
+$$
+SELECT C.Cno FROM CourseC WHERE C.Dept = deptname; 
+$$ LANGUAGE SQL;
+
+SELECT C.Cno FROM coursesOfferedByDept(‘Math’) C;
+\end{lstlisting}
+
+\section{Week 6. Aggregate Functions and Data Partitioning}
+
+A \term{collection} is a grouping of some variable number of data items (possibly zero). Usually the data items in a collection are of \prpt{the same type}. \term{Aggregate functions} are functions that apply to collections, i.e., they consider all these data items in these collections. Applied to a collection, an aggregate function returns \prpt{a single value}.
+
+Collections include: \prpt{(a)} sets, multisets, dictionaries (maps), relations; \prpt{(b)} vectors, lists, arrays, series; \prpt{(c)} data structures: stacks, queues, hash tables, trees, graphs.
+
+\subsection{Aggregate Functions}
+
+\sql{COUNT} applied to {} gives 0; \sql{SUM} applied to {} gives NULL.
+
+\begin{lstlisting}
+SELECT E.Sid, COUNT(*) AS No_Courses FROM Enroll E -- Map COUNT phease
+GROUP BY(E.Sid) -- Partition Phase
+\end{lstlisting}
+
+\term{Partition phase}: the \sql{GROUP BY} operator places each tuple E into the cell identified by its \exmp{E.Sid} value. 
+
+\term{Map COUNT phase}: the \sql{COUNT} function is mapped over the cells identified by the different possible \exmp{E.sid} values.
+
+\subsection{Example of GROUP BY} \label{sec:exmp group by}
+
+Find student ids as well as the number of courses they take.
+
+\begin{lstlisting}
+(SELECT E.Sid, COUNT(E.Cno) AS No_Courses FROM Enroll E GROUP BY (E.Sid))
+UNION
+(SELECT S.Sid, 0 AS No_Courses FROM Student S 
+ WHERE S.Sid NOT IN (SELECT E.Sid FROM Enroll E))
+\end{lstlisting}
+
+The following query will raise an error since s.x is not necessarily unique in a cell defined by s.x+s.y values S.
+
+\begin{lstlisting}
+SELECT s.x FROM Ss GROUP BY (s.x+s.y)	
+\end{lstlisting}
+
+\subsection{HAVING Aggregate Function}
+
+The \sql{HAVING} clause in a \sql{GROUP BY} selects those cells from the partition induced by the \sql{GROUP BY} clause that satisfy an \term{Aggregate Condition}. Only those cells are passed onto the \sql{SELECT} clause.
+
+For each student who majors in CS determine the number of courses taken by that student, provided that this number is at least 2.
+
+\begin{lstlisting}
+SELECT E.Sid, COUNT(E.Cno) FROM Enroll E, Student S
+WHERE E.Sid = S.Sid AND S.Major = 'CS'
+GROUP BY (E.Sid) HAVING COUNT(E.Cno) ≥ 2;	
+\end{lstlisting}
+
+For each student who majors in CS, determine the number of courses taken by that student, provided that this number is at least 3.”
+
+The \sql{HAVING} condition can be simulated in the WHERE clause with user-defined functions.
+
+\begin{lstlisting}
+SELECT S.Sid AS Sid, NumberOfCourses(S.Sid) FROM Student S
+WHERE S.major = ‘CS’ AND NumberOfCourses(S.Sid) ≥ 3
+\end{lstlisting}
+
+\subsection{Rank}
+
+List the rank order of the price of each product among all the tuples of its type.
+
+\begin{lstlisting}
+SELECT name, type, price, rank() OVER (PARTITION BY type ORDER BY price) FROM Product;
+-- An equivalent query
+SELECT p.name, p.type, p.price, (SELECT COUNT(1) FROM product p1
+WHERE p1.type = p.type AND p1.price < p.price) + 1
+FROM product p;
+\end{lstlisting}
+
+\section{Week 6. SQL Functions and Expressions}
+
+The result of this expression is a relation with a single tuple.
+
+\begin{lstlisting}
+SELECT 1 AS one;	
+\end{lstlisting}
+
+We can therefore place such an expression in a \sql{FROM}
+clause of another query.
+
+\begin{lstlisting}
+SELECT q.one FROM (SELECT 1 AS one) q;
+\end{lstlisting}
+
+To use a \sql{SELECT} expression statement as a value in another expression, it is required to place parentheses around that expression. The following is incorrect.
+
+\begin{lstlisting}
+SELECT SELECT 1	
+\end{lstlisting}
+
+The following statements are correct.
+
+\begin{lstlisting}
+SELECT (SELECT 1); -- return 1
+SELECT (SELECT 2)*(SELECT 3)	 -- return 6
+\end{lstlisting}
+
+\subsection{Case Expression and SQRT}
+
+\begin{lstlisting}
+SELECT E.Eid,
+    CASE WHEN E.Salary > 100000 THEN 'high';
+         WHEN E.Salary < 10000 THEN 'low'
+    ELSE 'medium' END AS SalaryRange
+FROM Employee E;
+\end{lstlisting}
+
+Find the pairs of points that are within distance 3.
+
+\begin{lstlisting}
+SELECT P1.Pid AS P1, P2.Pid AS P2
+FROM Point P1, Point P2
+WHERE sqrt(power(P1.X-P2.X,2)+power(P1.Y-P2.Y,2)) ≤ 3
+\end{lstlisting}
+
+Raise the salary of an employee by 5\% provided that the raise is less than \$1000.
+
+\begin{lstlisting}
+(SELECT E.Eid, E.Salary * 1.05 AS NewSalary FROM Employee E
+ WHERE E.Salary * 0.05 < 1000)
+UNION
+(SELECT E.Eid, E.Salary AS NewSalary FROM Employee E
+ WHERE E.Salary * 0.05 >= 1000)
+\end{lstlisting}
+
+\subsection{Functions Returning Sets}
+
+A function can also return a set of tuples (relation). The return type of such as function is specified using the \sql{RETURN SET record} clause. Let Pair(x int, y int) be a relation of pairs:
+
+\begin{lstlisting}
+CREATE FUNCTION sum_and_product(OUT sum int, OUT product int)
+RETURNS SETOF RECORD AS 
+$$
+SELECT P.x+P.y, P.x*P.y FROM Pair P;
+$$ LANGUAGE SQL;
+\end{lstlisting}
+
+Functions returning a record return a single record even if the body of the function computes a set of record. Leads to \prpt{non-deterministic} effects.
+
+\section{Quiz 1: Relational Model \& Intro to SQL}
+
+(1) The simplest form of an SQL query is as follows:
+\sql{SELECT} list of \ans{components} of \ans{tuples}
+\sql{FROM} list of tuple variables associated with \ans{relations}
+\sql{WHERE} condition on \ans{components}.
+
+(2) Provided we have the following two schemas: \sql{Student(sid, sname, major, year)} and \sql{Enroll(sid, cno, grade)}. How many tuple variables are required to execute the below query optimally: Find the name of each student who is enrolled in three courses? \ans{2}.
+
+(3) Which of the following is an invalid Relational model:
+
+\begin{itemize}
+	\item Movies(title, year, length, genre)
+	\item Movies(\underline{title}, \underline{year}, \underline{length}, \underline{genre})
+	\item \ans{Movies(title: string, year:integer, length:integer, genre:Array[int])}
+	\item Movies(title:string, year:integer, length:integer, genre:string)
+\end{itemize}
+
+\textbf{Non-Atomic Attribute (genre)}: In a relational model, each attribute should contain atomic (indivisible) values. However, the genre attribute is defined as an array (or list) of integers. \prpt{This is not atomic and violates the first normal form (1NF), which requires that each field contains only a single value.} Instead, genres should be stored in a separate table with a many-to-many relationship to the movies.
+
+(4) Which of the following is FALSE about the relational model?
+
+\begin{itemize}
+	\item A tuple is a set of attributes.
+	\item \ans{A relation is a list of tuples.}
+	\item The model uses a language that is consistent with predicate logic.
+	\item \ans{Duplicate tuples may occur in a relation.}
+\end{itemize}
+ 
+(5) \sql{cname} is the primary key in \sql{Company}.\sql{pid} is the primary key in \sql{Person}.\sql{cname} is the foreign key in \sql{Person} referencing the primary key \sql{cname} in \sql{Company}. If cascading delete is \prpt{disallowed}, deletion of ('Apple', 'Cupertino') will delete the tuple in relation Company. \ans{False}.
+
+\section{Quiz 2: Relational Model, SQL \& TRC}
+
+(1) Consider the sentence $\exists x \text{girl}(x)$ where the variable x comes from the domain of persons. Which of the following is the most appropriate interpretation of this sentence. \ans{There exists a person who is a girl.}
+
+(2) The following TRC expression represents a constraint: $\exists S (\text{Skill}(S) \land S.\text{skill} = \text{'AI'})$.
+
+(3) Which of the following is NOT correct for Tuple Relational Calculus (TRC)?
+
+\begin{itemize}
+	\item TRC applies on relational model 
+	\item TRC is a declarative language 
+	\item \ans{TRC is a procedural language}
+	\item Variables in TRC range over tuples 
+\end{itemize}
+
+\subsection{Quiz 3: TRC, RA}
+
+(1) Which of the following statement is True:
+
+\begin{itemize}
+	\item \ans{Rewrite rules can transform a RA expression into another equivalent RA expression that is more efficient to evaluate.}
+	\item RA is a declarative language.
+	\item RA and SQL express the same queries with aggregation functions.
+\end{itemize}
+
+(2) \term{$\{() | \exists w \in  \text{worksFor} \land w.\text{cname} = \text{'Google'} \}$}. Which of the statements correspond to the above TRC. \ans{Some person works for Google}.
+
+(3) Which of the following can be used in SQL to represent an existential quantifier in TRC? 1. \ans{EXISTS}; 2. \ans{SOME}; 3. ANY; 4. ALL.
+
+(4) Consider the RA expression: $\pi_{\text{Person.pname, worksFor.salary}} (\sigma_{\text{Person.city} = 'Seattle'} (\text{Person} \bowtie \text{worksFor}))$. Which of the following statements best describes the operation? \ans{It retrieves the names of all people living in Seattle along with their salaries, but only if they work for a company.}
+
+(5) Which of the following is FALSE about query plans
+
+\begin{itemize}
+	\item The leaf nodes of a query plan are typically relational tables.
+	\item \ans{Projection pushdown (moving projection operators closer to leaf nodes) always yields an equivalent query plan. }
+	\item For query plans with only joins (one the same key), changing the join orders always yields an equivalent query plan. 
+	\item Query plans depict the logical execution sequence of a query 
+\end{itemize}
+
+(6) Match the following logically equivalent pairs.
+
+\begin{itemize}
+	\item $\neg (F \rightarrow G) \iff F \land \neg G$.
+	\item $\exists t (F(t) \land G(t)) \iff \neg \forall t (F(t) \rightarrow \neg G(t))$
+	\item $\forall t (F(t) \rightarrow G(t)) \iff \neg \exists t (F(t) \land \neg G(t))$
+	\item $F \rightarrow (G \rightarrow H) \iff (F\land G) \rightarrow H$
+\end{itemize}
+
+\section{Quiz 4: Views, Joins}
+
+(1) What is the output of the following recursive query? \ans{Syntax Error} since the base case fails.
+
+\begin{lstlisting}
+WITH RECURSIVE t(no1) AS (
+    SELECT 1 FROM t
+    UNION ALL
+    SELECT no1+1 FROM t WHERE n < 5
+)
+SELECT sum(no1) FROM t;
+\end{lstlisting}
+
+(2) Select all the types which are not Regular Join: CROSS JOIN; JOIN; NATURAL JOIN; \ans{[NOT] EXISTS}; INNER JOIN; \ans{[NOT] IN}.
+
+(3) Consider RA expressions E1 and E2 with schemas E1(A1, A2, ..., An), and E2(B1, B2, ..., Bn). Does the following equivalence hold (\ans{False}). $E_1 \cap E_2 = E_1 \bowtie E_2$
+
+(4) The view \exmp{StudentSkill\_AI} is defined on the \exmp{studentSkill} relation as follows:
+
+\begin{lstlisting}
+CREATE VIEW StudentSkill AS
+SELECT Ss.sid FROM StudentSkill Ss WHERE Ss.Skill = 'AI';
+\end{lstlisting}
+
+Assuming \exmp{sid=1011} exists in \exmp{studentSkill}, does the following \sql{DELETE} statement deletes the tuple \exmp{(1011, 'AI')} from the \exmp{studentSkill} relation? \ans{False}
+
+\begin{lstlisting}
+DELETE FROM StudentSkill_AI WHERE sid = 1011;
+\end{lstlisting}
+
+(5) In SQL, how can semijoins be simulated?
+
+\begin{itemize}
+	\item Using the NATURAL JOIN operator. 
+	\item Using the IN predicate. 
+	\item Using the UNION operator. 
+	\item \ans{Both A and B.}
+
+\end{itemize}
+
+(6) What is the output of the following recursive query? \ans{120}
+
+\begin{lstlisting}
+WITH RECURSIVE t(no1, no2) AS (
+    VALUES (1, 1) UNION ALL
+    SELECT no1+1, (no1+1) + no2 FROM t WHERE n < 5
+)
+SELECT max(no2) FROM t;
+\end{lstlisting}
+
+(7) Query evaluation precedes view expansion. \ans{False}
+
+(8) Which of the following is FALSE about materialized views
+  
+\begin{itemize}
+\item \sql{CREATE MATERIALIZED VIEW} is similar to \sql{CREATE TABLE} 
+\item Materialized view need to be updated after every base table insert 
+\item \sql{REFRESH MATERIALIZED VIEW} is used to update a materialized view 
+\item \ans{Materialized view query need to be expanded at every evaluation}
+\end{itemize} 
+
+(9) Mark the statement that is False about Natural Joins:
+
+\begin{itemize}
+	\item Natural Join is associative. 
+	\item SQL supports a Natural Join operator. 
+	\item \ans{R1 Natural Join R2 is a subset of R1.} 
+	\item A Natural Join with no common attributes resembles a Cartesian Product. 
+\end{itemize} 
+
+\section{Quiz 5: Joins and Semijoins}
+
+(1) Which of the following is always true:
+
+\begin{itemize}
+	\item $E_1 \semijoin E_2 \subseteq E_1 \cap E_2$
+	\item \ans{$E_1 \semijoin E_2 \subseteq E_1$}
+\end{itemize}
+
+(2) Consider the following equality $E_1 \semijoin E_2 = E_1 \bowtie \pi_c (E_2)$. Which of the following represents the schemas of E1 and E2 for the above equality to hold
+
+\begin{itemize}
+	\item \ans{E1(a, b, c), E2(a, b, c)}
+	\item \ans{E1(a, b, c), E2(d, c)}
+\end{itemize}
+
+(3) Consider $E_1 \semijoin E_2$. Which of the following represents the schemas of E1 and E2 for the semijoin to run in linear time.
+
+\begin{itemize}
+	\item \ans{E1(a, b, c), E2(a, b, c)}
+	\item \ans{E1(a, b, c), E2(d, c)}
+\end{itemize}
+
+(4) Consider the schemas Student(sid, sname, age) and Enroll(sid, cno, grade). Finding the names of students along with the courses they are taking can be done using a semijoin. \ans{False}
+
+(5) Consider the following equality  $E_1 \semijoin E_2 = E_1 - E_2$. Which of the following represents the schemas of E1 and E2 for the above equality to hold
+
+\begin{itemize}
+	\item \ans{E1(a, b, c), E2(a, b, c)}
+	\item E1(a, b, c), E2(d, c)
+\end{itemize}
+
+(6) Select the options that are FALSE regarding the \sql{SEMI JOIN}.
+
+\begin{itemize}
+	\item \ans{\sql{SEMI JOIN} is associative.} 
+	\item \ans{\sql{SEMI JOIN} always returns the same result as a \sql{NATURAL JOIN}.} 
+	\item \sql{SEMI JOIN} can be performed by the "\sql{IN}" predicate in an SQL query. 
+	\item \sql{SEMI JOIN} only returns columns from the left relation. 
+\end{itemize}
+
+(7) Mark the statement that is False about \sql{Natural Joins}:
+
+\begin{itemize}
+	\item SQL supports a Natural Join operator. 
+	\item A Natural Join with no common attributes resembles a Cartesian Product. 
+	\item \ans{R1 Natural Join R2 is a subset of R1.} 
+	\item Natural Join is associative. 
+\end{itemize}
+
+(8) What of the SQL Keywords support Regular Join: \sql{[NOT] IN}; \sql{[NOT] EXISTS}; \ans{INNER JOIN}; \ans{JOIN}; \ans{CROSS JOIN}; \ans{NATURAL JOIN}.
+ 
+\subsection{Quiz 6: SQL Expressions and Aggregate Functions}
+
+(1) Which of the following is not a valid usage of SQL expression?
+
+\begin{itemize}
+	\item SELECT q.one from (select 1 as one) as q
+	\item \ans{SELECT SELECT 1}
+	\item SELECT q.one from (select 1 as one) as q where (select (select 1)) = (select 2)
+	\item SELECT (SELECT 1)
+\end{itemize}
+
+(2) SQL expression can be a single constant, variable, column or a scalar function but must always evaluate to a single value. \ans{True}, a tuple is a value as well.
+
+(3) Provided the same input values and database state, AVG(), RANK(), GETDATE() are: \ans{Deterministic, deterministic, non-deterministic}.
+
+(4) Provided that the following function is created successfully, 
+
+\begin{lstlisting}
+CREATE FUNCTION return_same(input_text text)
+RETURNS SETOF RECORD AS
+$$
+SELECT input_text AS one, input_text AS two
+$$ LANGUAGE SQL STABLE;
+\end{lstlisting}
+
+running the second query returns \ans{Error}.
+
+\begin{lstlisting}
+Select  from return_same('example')
+\end{lstlisting}
+
+(5) Which of the following Boolean query checks for foreign key constraint?
+
+\begin{lstlisting}
+SELECT NOT EXISTS (
+    SELECT E.Sid FROM Enroll E WHERE E.Sid NOT IN (
+        SELECT S.Sid FROM Student S))
+\end{lstlisting}
+
+(6) Select all that are collections: \ans{Graphs, Vectors, Maps, Relations.}
+
+(7) Functions SUM(), AVG() and COUNT() returns NULL when queried on an empty table. \ans{False}, SUM() returns NULL, COUNT() returns 0.
+
+(8) The following query returns the number of courses taken by each student for all the students in the Student relation. \ans{False}
+
+\begin{lstlisting}
+SELECT S.Sid, Count(E.Cno)
+FROM Student S, Enroll E
+WHERE S.Sid = E.Sid
+GROUP BY (S.Sid)
+\end{lstlisting}
+
+(9) Provided the following Numbers table:
+
+\begin{center}
+\begin{tabular}{ c | c | c }
+   & num\_1 & num\_2 \\ 
+ \hline
+ 1 & 1 & 0 \\
+ \hline  
+ 2 & 2 & 3 \\  
+ \hline
+ 3 & 1 & 3 \\  
+ \hline
+ 4 & 4 & 0    
+\end{tabular}
+\end{center}
+
+Running the below will result in? \ans{Error}, see \textbf{Week 6, Example of GROUP BY}.
+
+\begin{lstlisting}
+SELECT n.num_1 FROM Numbers n GROUP BY (n.num_1 + n.num_2)
+\end{lstlisting}
+
+(10) Partitioning by subject, ordering by score: using \sql{RANK()} and \sql{Dense\_Rank()} provides the same result? \ans{Not necessarily.}
+
+\begin{itemize}
+	\item Use \sql{RANK()} if gaps in ranking are acceptable or if you need to know how many rows are tied at each rank. \sql{RANK()} will return (1, 1, 3, 4).
+	\item Use \sql{DENSE\_RANK()} if you want consecutive ranking numbers with no gaps, even when there are ties. \sql{DENSE\_RANK()} will return (1, 1, 2, 3).
+\end{itemize}
+
+
+\end{multicols}
+
+\end{document}
